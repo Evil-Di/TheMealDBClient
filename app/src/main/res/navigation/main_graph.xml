@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/welcomeFragment">
+
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:label="welcomeFragment"
+        android:name="ru.otusevildi.themealdbclient.ui.welcome.WelcomeFragment"
+        tools:layout="@layout/fragment_welcome">
+        <action
+            android:id="@+id/to_containerFragment"
+            app:destination="@id/containerFragment"
+            app:popUpTo="@id/main_graph"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/containerFragment"
+        android:label="containerFragment"
+        android:name="ru.otusevildi.themealdbclient.ui.container.ContainerFragment"
+        tools:layout="@layout/fragment_container">
+    </fragment>
+</navigation>

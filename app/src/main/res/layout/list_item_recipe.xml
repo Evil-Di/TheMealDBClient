@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card1"
+        style="@style/RecipeItemCardStyle"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="7dp"
+        android:layout_weight=".33"
+        >
+        <ImageView
+            android:id="@+id/image1"
+            style="@style/RecipeItemImageStyle"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:contentDescription="@string/recipe_list_item_image"
+            />
+
+        <TextView
+            style="@style/RecipeItemNameStyle"
+            android:id="@+id/name1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:layout_margin="7dp"
+            />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card2"
+        style="@style/RecipeItemCardStyle"
+        android:layout_margin="7dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".33"
+        >
+        <ImageView
+            android:id="@+id/image2"
+            style="@style/RecipeItemImageStyle"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:contentDescription="@string/recipe_list_item_image"
+            />
+
+        <TextView
+            style="@style/RecipeItemNameStyle"
+            android:id="@+id/name2"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:layout_margin="7dp"
+            />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card3"
+        style="@style/RecipeItemCardStyle"
+        android:layout_margin="7dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".33"
+        >
+        <ImageView
+            android:id="@+id/image3"
+            style="@style/RecipeItemImageStyle"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:contentDescription="@string/recipe_list_item_image"
+            />
+
+        <TextView
+            style="@style/RecipeItemNameStyle"
+            android:id="@+id/name3"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:layout_margin="7dp"
+            />
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

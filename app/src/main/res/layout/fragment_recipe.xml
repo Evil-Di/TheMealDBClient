@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/orderBottomSheetCoordinator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="vertical"
+            android:layout_marginBottom="120dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/CategoryItemNameStyle"
+                android:text="Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <CheckBox
+                android:id="@+id/favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/favorite"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="10dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/favorite_recipe_image"
+                android:transitionName="image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                />
+
+            <TextView
+                android:id="@+id/instructions"
+                style="@style/CategoryItemNameStyle"
+                android:text="@string/instructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image"
+                />
+
+            <TextView
+                android:id="@+id/instructions_text"
+                style="@style/CategoryItemInfoStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/instructions"
+                />
+
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/youtube_player"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/instructions_text"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/orderBottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/IngredientsBottomSheet"
+            >
+            <TextView
+                android:id="@+id/ingredients"
+                style="@style/CategoryItemNameStyle"
+                android:text="@string/ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView android:id="@+id/i1"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/ingredients"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i2"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i1"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i3"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i2"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i4"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i3"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i5"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i4"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i6"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i5"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i7"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i6"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i8"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i7"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i9"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i8"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i10"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i9"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i11"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i10"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i12"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i11"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i13"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i12"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i14"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i13"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i15"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i14"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i16"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i15"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i17"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i16"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i18"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i17"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i19"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i18"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView android:id="@+id/i20"
+                style="@style/IngredientNameStyle"
+                app:layout_constraintTop_toBottomOf="@id/i19"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView android:id="@+id/m1"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/ingredients"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m2"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m1"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m3"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m2"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m4"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m3"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m5"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m4"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m6"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m5"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m7"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m6"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m8"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m7"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m9"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m8"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m10"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m9"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m11"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m10"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m12"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m11"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m13"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m12"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m14"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m13"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m15"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m14"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m16"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m15"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m17"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m16"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m18"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m17"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m19"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m18"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView android:id="@+id/m20"
+                style="@style/IngredientMeasureStyle"
+                app:layout_constraintTop_toBottomOf="@id/m19"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>

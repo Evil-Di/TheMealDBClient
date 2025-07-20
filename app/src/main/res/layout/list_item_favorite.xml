@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="8dp"> <!-- You must give a background to this layout if you want the shadow to work -->
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/RecipeItemCardStyle"
+        >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <ImageView
+                style="@style/RecipeItemImageStyle"
+                android:id="@+id/image"
+                android:contentDescription="@string/favorite_recipe_image"
+                android:transitionName="image"
+                 />
+
+            <TextView
+                style="@style/RecipeItemNameStyle"
+                android:id="@+id/title"
+                />
+
+        </FrameLayout>
+    </com.google.android.material.card.MaterialCardView>
+</FrameLayout>
