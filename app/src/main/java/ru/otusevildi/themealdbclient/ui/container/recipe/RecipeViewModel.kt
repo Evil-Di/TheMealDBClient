@@ -14,23 +14,35 @@ class RecipeViewModel @Inject constructor(private val dataCache: DataCache) : Vi
     private var _recipe = MutableStateFlow<RecipeViewState>(RecipeViewState.Loading)
     val recipe: StateFlow<RecipeViewState> get() = _recipe
 
+    private var _favorite = MutableStateFlow(false)
+    val favorite: StateFlow<Boolean> get() = _favorite
+
+    private var recipeId = ""
+
     init {
         viewModelScope.launch {
             dataCache.recipeById.collect {
                 if (it != null) {
                     _recipe.value = RecipeViewState.Received(it)
-                    isFavorute()
                 }
-            }
-            dataCache.favorites.collect {
-
             }
         }
     }
 
     fun selectRecipe(id: String) {
+        recipeId = id
         viewModelScope.launch {
             dataCache.selectRecipe(viewModelScope, id)
+        }
+
+        viewModelScope.launch {
+            dataCache.favorites.collect { list ->
+                list.forEach {
+                    if (it.id == recipeId) {
+                        _favorite.value = true
+                    }
+                }
+            }
         }
     }
 
@@ -39,9 +51,5 @@ class RecipeViewModel @Inject constructor(private val dataCache: DataCache) : Vi
             if (set) dataCache.addFavorite(viewModelScope, id)
             else dataCache.removeFavorite(viewModelScope, id)
         }
-    }
-
-    private fun isFavorute() {
-
     }
 }

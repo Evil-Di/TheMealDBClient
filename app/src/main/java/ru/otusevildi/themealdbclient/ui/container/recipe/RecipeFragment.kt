@@ -34,15 +34,22 @@ class RecipeFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launch {
-            viewModel.recipe.collect { state ->
-                when(state) {
-                    RecipeViewState.Loading -> showLoading()
-                    is RecipeViewState.Received -> state.recipe?.let { showRecipe(it) }
+        binding.withBinding {
+            lifecycleScope.launch {
+                viewModel.recipe.collect { state ->
+                    when(state) {
+                        RecipeViewState.Loading -> showLoading()
+                        is RecipeViewState.Received -> state.recipe?.let { showRecipe(it) }
+                    }
+                }
+            }
+            viewModel.selectRecipe(recipeId)
+            lifecycleScope.launch {
+                viewModel.favorite.collect {
+                    favorite.isChecked = it
                 }
             }
         }
-        viewModel.selectRecipe(recipeId)
     }
 
     private fun showLoading() {}
