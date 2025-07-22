@@ -21,9 +21,4 @@ class CategoriesViewModel @Inject constructor(private val dataCache: DataCache) 
             }
         }
     }
-
-    fun selectCategory(id: String) {
-    }
-
-
 }

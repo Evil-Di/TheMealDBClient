@@ -9,10 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import ru.otus.basicarchitecture.ui.FragmentBindingDelegate
 import ru.otusevildi.themealdbclient.databinding.FragmentFavoritesBinding
 import kotlin.math.abs
@@ -39,9 +42,11 @@ class FavoritesFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.withBinding {
-
-            adapter = FavoritesListAdapter(requireContext()) {
-                Log.i(TAG, "Click")
+            adapter = FavoritesListAdapter(requireContext()) { recipeId ->
+                Log.i(TAG, "Click receipt $recipeId")
+                recipeId?.let {
+                    findNavController().navigate(FavoritesFragmentDirections.toRecipeFragment(it))
+                }
             }
             viewPager.adapter = adapter
             viewPager.apply {
@@ -53,8 +58,14 @@ class FavoritesFragment: Fragment() {
 
                 viewPager.setPageTransformer(compositePageTransformer())
             }
-            viewModel.recentList.observe(viewLifecycleOwner) {
-                adapter.setData(it)
+        }
+
+        lifecycleScope.launch {
+            viewModel.recipes.collect { state ->
+                when (state) {
+                    FavoritesViewState.Loading -> Unit
+                    is FavoritesViewState.ListReceived -> adapter.setData(state.list)
+                }
             }
         }
     }

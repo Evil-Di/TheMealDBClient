@@ -37,26 +37,28 @@ class RecipeListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.withBinding {
-            text.text = category
-            val adapter = RecipeListAdapter(requireContext()) { recipeId ->
-                Log.i(TAG, "Click receipt $recipeId")
-                recipeId?.let {
-                    findNavController().navigate(RecipeListFragmentDirections.toRecipeFragment(it))
-                }
+        val adapter = RecipeListAdapter(requireContext()) { recipeId ->
+            Log.i(TAG, "Click receipt $recipeId")
+            recipeId?.let {
+                findNavController().navigate(RecipeListFragmentDirections.toRecipeFragment(it))
             }
+        }
 
+        binding.withBinding {
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter
-            lifecycleScope.launch {
-                viewModel.recipes.collect { state ->
-                    when(state) {
-                        RecipeListViewState.Loading -> Unit
-                        is RecipeListViewState.ListReceived -> adapter.setData(state.list)
-                    }
+            text.text = category
+        }
+
+        lifecycleScope.launch {
+            viewModel.recipes.collect { state ->
+                when(state) {
+                    RecipeListViewState.Loading -> Unit
+                    is RecipeListViewState.ListReceived -> adapter.setData(state.list)
                 }
             }
         }
+
         viewModel.selectList(category)
     }
 }

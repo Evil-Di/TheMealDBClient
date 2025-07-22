@@ -10,22 +10,21 @@ import ru.otusevildi.themealdbclient.data.Recipe
 import ru.otusevildi.themealdbclient.databinding.ListItemFavoriteBinding
 
 class FavoritesListAdapter(private val context: Context, private val onRecipeClick: (String?) -> Unit):
-    RecyclerView.Adapter<FavoritesListAdapter.RecentItemViewHolder>() {
+    RecyclerView.Adapter<FavoritesListAdapter.FavoriteListItemViewHolder>() {
 
     private var data: List<Recipe> = emptyList()
 
-    class RecentItemViewHolder(var binding: ListItemFavoriteBinding) : RecyclerView.ViewHolder(binding.root)
+    class FavoriteListItemViewHolder(var binding: ListItemFavoriteBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun getItemCount(): Int = data.size // Количество элементов в списке данных
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteListItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemFavoriteBinding.inflate(inflater, parent, false)
-
-        return RecentItemViewHolder(binding)
+        return FavoriteListItemViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RecentItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FavoriteListItemViewHolder, position: Int) {
         if (position < data.size) {
             val item = data[position]
             with(holder.binding) {

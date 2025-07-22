@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+    kapt(libs.glide.compiler)
     implementation(libs.secrets.gradle.plugin)
     implementation(libs.androidx.viewpager2)
     implementation(libs.glide)
@@ -69,5 +70,4 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.youtubeplayer.core)
-
 }
