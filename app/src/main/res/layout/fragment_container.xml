@@ -19,6 +19,11 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
             <!-- Screen content goes here. -->
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout"
                     android:visibility="visible"
@@ -39,6 +44,15 @@
                         />
 
                 </com.google.android.material.tabs.TabLayout>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/secondary_container_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                />
+
+            </FrameLayout>
 
         </androidx.core.widget.NestedScrollView>
 
@@ -68,15 +82,6 @@
             <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
 
         </com.google.android.material.search.SearchView>
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/secondary_container_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="80dp"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-             />
-
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
