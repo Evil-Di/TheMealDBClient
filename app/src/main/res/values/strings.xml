@@ -5,7 +5,7 @@
     <string name="categories">Categories</string>
     <string name="favorites">Favorites</string>
     <string name="favorite_recipe_image">This is favorite recipe image</string>
-    <string name="search_hint">Search favorives</string>
+    <string name="search_hint">Search recipe</string>
     <string name="recipe_list_item_image">This is image from recipe list</string>
     <string name="instructions">Instructions</string>
     <string name="ingredients">Ingredients</string>
