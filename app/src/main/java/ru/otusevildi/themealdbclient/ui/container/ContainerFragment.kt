@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -12,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -45,6 +47,43 @@ class ContainerFragment : Fragment() {
                 }
             }
         }
+
+        binding.withBinding {
+            recyclerView.visibility = View.INVISIBLE
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            recyclerView.adapter = SearchListAdapter { recipeId ->
+                searchView.hide()
+                recipeId?.let {
+                    getNavController().navigate(
+                        ContainerFragmentDirections.toRecipeFragment(
+                            recipeId
+                        )
+                    )
+                }
+            }
+            lifecycleScope.launch {
+                viewModel.suggestions.collect {
+                    if (it.isNotEmpty() && searchView.editText.text.isNotEmpty()) {
+                        (recyclerView.adapter as SearchListAdapter).setData(it)
+                    }
+                    else {
+                        (recyclerView.adapter as SearchListAdapter).setData(emptyList())
+                    }
+                    recyclerView.visibility = View.VISIBLE
+                }
+            }
+
+            searchView.editText.doAfterTextChanged {
+                if (searchView.editText.text.isNotEmpty()) {
+                    viewModel.onSearch(it.toString())
+                }
+                else {
+                    recyclerView.visibility = View.INVISIBLE
+                }
+            }
+        }
+
+
     }
 
     private fun selectTab(tab: Int) {

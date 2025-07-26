@@ -25,10 +25,12 @@ interface DataCache {
     val recipesByCategory: Flow<List<RecipeShort>>
     val recipeById: Flow<Recipe?>
     val favorites: Flow<List<Recipe>>
+    val suggestions: Flow<List<Recipe>>
     fun init(scope: CoroutineScope, service: NetService)
     fun setSelectedTab(scope: CoroutineScope, index: Int)
     fun selectCategory(scope: CoroutineScope, category: String)
     fun selectRecipe(scope: CoroutineScope, id: String)
+    fun getSuggestions(scope: CoroutineScope, text: String)
     fun addFavorite(scope: CoroutineScope, f: String)
     fun removeFavorite(scope: CoroutineScope, f: String)
     fun clear(scope: CoroutineScope)
@@ -59,6 +61,9 @@ interface DataCache {
         private var _favorites = MutableStateFlow<List<Recipe>>(emptyList())
         override val favorites: StateFlow<List<Recipe>> get() = _favorites
 
+        private var _suggestions = MutableStateFlow<List<Recipe>>(emptyList())
+        override val suggestions: StateFlow<List<Recipe>> get() = _suggestions
+
         override fun init(scope: CoroutineScope, service: NetService) {
             this.service = service
             scope.launch {
@@ -82,7 +87,7 @@ interface DataCache {
                         favoriteIds.forEach {
                             if (!checkLoaded(it)) {
                                 resultList.add(async(Dispatchers.IO) {
-                                    service.getById(it).list[0]
+                                    service.getById(it).list!![0]
                                 })
                             }
                         }
@@ -92,7 +97,7 @@ interface DataCache {
                 }
             }
             scope.launch {
-                _categories.value = service.getCategories().list
+                _categories.value = service.getCategories().list!!
             }
         }
 
@@ -127,6 +132,17 @@ interface DataCache {
                 }
             }
             else _recipesByCategory.value = categoryRecipes[category]!!
+        }
+
+        override fun getSuggestions(scope: CoroutineScope, text: String) {
+            if (text.isNotEmpty()) {
+                scope.launch {
+                    val list: List<Recipe> = withContext(Dispatchers.IO) {
+                        service?.getByName(text)?.list ?: emptyList()
+                    }
+                    _suggestions.value = list
+                }
+            }
         }
 
         override fun addFavorite(scope: CoroutineScope, f: String) {

@@ -59,7 +59,7 @@ import kotlinx.serialization.Serializable
     @SerialName("dateModified") val modified: String?
 )
 
-@Serializable data class Recipes(@SerialName("meals") val list: List<Recipe>)
+@Serializable data class Recipes(@SerialName("meals") val list: List<Recipe>?)
 
 
 @Serializable data class RecipeShort(
@@ -68,4 +68,4 @@ import kotlinx.serialization.Serializable
     @SerialName("strMealThumb") val tLink: String?
 )
 
-@Serializable data class RecipesShort(@SerialName("meals") val list: List<RecipeShort>)
+@Serializable data class RecipesShort(@SerialName("meals") val list: List<RecipeShort>?)

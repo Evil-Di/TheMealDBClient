@@ -38,7 +38,7 @@ interface TheMealDbApi {
 }
 
 fun buildRetrofit(okHttpClient: OkHttpClient, sessionManager: SessionManager): Retrofit {
-    val json = Json /*{ coerceInputValues = true }*/
+    val json = Json /*{ignoreUnknownKeys = true}*/ /*{ coerceInputValues = true }*/
     return Retrofit.Builder()
         .baseUrl(baseUrl + "${sessionManager.getToken()}/")
         .client(okHttpClient)

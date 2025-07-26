@@ -15,6 +15,9 @@
         <action
             android:id="@+id/to_recipesFragment"
             app:destination="@id/recipesFragment"/>
+        <action
+            android:id="@+id/to_recipeFragment"
+            app:destination="@id/recipeFragment"/>
     </fragment>
 
     <fragment
@@ -54,6 +57,11 @@
         <argument
             android:name="recipeId"
             app:argType="string" />
+        <action
+            android:id="@+id/to_recipeFragment"
+            app:destination="@id/recipeFragment"
+            app:popUpTo="@id/secondary_graph"
+            />
     </fragment>
 
 </navigation>

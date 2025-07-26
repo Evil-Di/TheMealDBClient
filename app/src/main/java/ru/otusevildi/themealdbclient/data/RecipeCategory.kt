@@ -10,4 +10,4 @@ import kotlinx.serialization.Serializable
     @SerialName("strCategoryDescription") val description: String?
 )
 
-@Serializable data class RecipeCategories(@SerialName("categories") val list: List<RecipeCategory>)
+@Serializable data class RecipeCategories(@SerialName("categories") val list: List<RecipeCategory>?)

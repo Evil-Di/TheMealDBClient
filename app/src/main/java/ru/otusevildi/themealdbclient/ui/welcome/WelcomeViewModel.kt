@@ -35,7 +35,7 @@ class WelcomeViewModel @Inject constructor(private val service: NetService): Vie
             val recipes: Recipes = withContext(Dispatchers.IO) {
                 service.getRandom()
             }
-            emit(WelcomeViewState.Done(recipes.list[0].tLink))
+            emit(WelcomeViewState.Done(recipes.list!![0].tLink))
             delay(10000) //время отображения приветствия
             emit(WelcomeViewState.TimedOut)
         }

@@ -21,5 +21,18 @@
         android:label="containerFragment"
         android:name="ru.otusevildi.themealdbclient.ui.container.ContainerFragment"
         tools:layout="@layout/fragment_container">
+        <action
+            android:id="@+id/to_recipeFragment"
+            app:destination="@id/recipeFragment"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="ru.otusevildi.themealdbclient.ui.container.recipe.RecipeFragment"
+        android:label="recipeFragment"
+        tools:layout="@layout/fragment_recipe">
+        <argument
+            android:name="recipeId"
+            app:argType="string" />
     </fragment>
 </navigation>
