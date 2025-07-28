@@ -1,4 +1,4 @@
-package ru.otusevildi.themealdbclient.ui.container
+package ru.otusevildi.themealdbclient.ui
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

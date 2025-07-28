@@ -11,16 +11,33 @@
         android:name="ru.otusevildi.themealdbclient.ui.welcome.WelcomeFragment"
         tools:layout="@layout/fragment_welcome">
         <action
-            android:id="@+id/to_containerFragment"
-            app:destination="@id/containerFragment"
+            android:id="@+id/to_categoriesFragment"
+            app:destination="@id/categoriesFragment"
             app:popUpTo="@id/main_graph"
             />
     </fragment>
     <fragment
-        android:id="@+id/containerFragment"
-        android:label="containerFragment"
-        android:name="ru.otusevildi.themealdbclient.ui.container.ContainerFragment"
-        tools:layout="@layout/fragment_container">
+        android:id="@+id/categoriesFragment"
+        android:label="categoriesFragment"
+        android:name="ru.otusevildi.themealdbclient.ui.categories.CategoriesFragment"
+        tools:layout="@layout/tab_categories">
+        <action
+            android:id="@+id/to_recipesFragment"
+            app:destination="@id/recipesFragment"
+            />
+        <action
+            android:id="@+id/to_recipeFragment"
+            app:destination="@id/recipeFragment"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/recipesFragment"
+        android:name="ru.otusevildi.themealdbclient.ui.recipes.RecipeListFragment"
+        android:label="recipesFragment"
+        tools:layout="@layout/fragment_recipes">
+        <argument
+            android:name="category"
+            app:argType="string" />
         <action
             android:id="@+id/to_recipeFragment"
             app:destination="@id/recipeFragment"
@@ -28,11 +45,15 @@
     </fragment>
     <fragment
         android:id="@+id/recipeFragment"
-        android:name="ru.otusevildi.themealdbclient.ui.container.recipe.RecipeFragment"
+        android:name="ru.otusevildi.themealdbclient.ui.recipe.RecipeFragment"
         android:label="recipeFragment"
         tools:layout="@layout/fragment_recipe">
         <argument
             android:name="recipeId"
             app:argType="string" />
+        <action
+            android:id="@+id/to_recipeFragment"
+            app:destination="@id/recipeFragment"
+            />
     </fragment>
 </navigation>

@@ -1,4 +1,4 @@
-package ru.otusevildi.themealdbclient.ui.container.recipe
+package ru.otusevildi.themealdbclient.ui.recipe
 
 import ru.otusevildi.themealdbclient.data.Recipe
 

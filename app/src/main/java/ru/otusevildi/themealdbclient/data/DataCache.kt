@@ -1,5 +1,7 @@
 package ru.otusevildi.themealdbclient.data
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,7 +46,7 @@ interface DataCache {
         private val categoryRecipes: MutableMap<String, List<RecipeShort>> =
             emptyMap<String, List<RecipeShort>>().toMutableMap()
 
-        private var favoriteIds: MutableSet<String> = emptySet<String>().toMutableSet()
+        private var favoriteIds: MutableSet<String>? = null//emptySet<String>().toMutableSet()
 
         private var _selectedTab = MutableStateFlow(TAB_NOT_SELECTED)
         override val selectedTab: StateFlow<Int> get() = _selectedTab
@@ -73,18 +75,31 @@ interface DataCache {
             }
             scope.launch {
                 dataStoreProvider.getFavorites().collect { set ->
+                    Log.i(TAG, "new favorites: $set")
                     if (set != favoriteIds) {
                         favoriteIds = set.toMutableSet()
                         val resultList = mutableListOf<Deferred<Recipe>>()
                         val newList = _favorites.value.toMutableList()
+
+                        /* здесь возможен RuntimeException.concurrencyModification
                         newList.forEach {
                             if (it.id != null) {
                                 if (!checkInList(it.id, favoriteIds.toList())) {
                                     newList.remove(it)
                                 }
                             }
+                        } напишем иначе */
+                        var i = newList.size-1
+                        while(i >= 0) {
+                            if (newList[i].id != null) {
+                                if (!checkInList(newList[i].id!!, favoriteIds!!.toList())) {
+                                    newList.removeAt(i)
+                                }
+                            }
+                            i--
                         }
-                        favoriteIds.forEach {
+
+                        favoriteIds!!.forEach {
                             if (!checkLoaded(it)) {
                                 resultList.add(async(Dispatchers.IO) {
                                     service.getById(it).list!![0]
@@ -146,8 +161,9 @@ interface DataCache {
         }
 
         override fun addFavorite(scope: CoroutineScope, f: String) {
-            if (!favoriteIds.contains(f)) {
-                val newList: MutableSet<String> = favoriteIds.toMutableSet()
+            Log.i(TAG, "add favorite: $f")
+            if (!favoriteIds!!.contains(f)) {
+                val newList: MutableSet<String> = favoriteIds!!.toMutableSet()
                 if (newList.add(f)) {
                     scope.launch {
                         dataStoreProvider.setFavorites(newList)
@@ -157,8 +173,9 @@ interface DataCache {
         }
 
         override fun removeFavorite(scope: CoroutineScope, f: String) {
-            if (favoriteIds.contains(f)) {
-                val newList: MutableSet<String> = favoriteIds.toMutableSet()
+            Log.i(TAG, "remove favorite: $f")
+            if (favoriteIds!!.contains(f)) {
+                val newList: MutableSet<String> = favoriteIds!!.toMutableSet()
                 if (newList.remove(f)) {
                     scope.launch {
                         dataStoreProvider.setFavorites(newList)
@@ -168,7 +185,7 @@ interface DataCache {
         }
 
         override fun clear(scope: CoroutineScope) {
-            favoriteIds.clear()
+            favoriteIds!!.clear()
             scope.launch {
                 dataStoreProvider.clear()
             }

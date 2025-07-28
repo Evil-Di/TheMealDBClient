@@ -1,7 +1,9 @@
 package ru.otusevildi.themealdbclient.ui.welcome
 
+import android.content.ContentValues.TAG
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +27,10 @@ class WelcomeFragment : Fragment() {
     private val binding = FragmentBindingDelegate<FragmentWelcomeBinding>(this)
     private val viewModel: WelcomeViewModel by viewModels()
 
+    init {
+        Log.i(TAG, "WelcomeFragment")
+    }
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,savedInstanceState: Bundle?): View =
         binding.bind(container,FragmentWelcomeBinding::inflate)
@@ -32,24 +38,23 @@ class WelcomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        showLoading()
+
         binding.withBinding {
-            text.isVisible = false
-            image.isVisible = true
-            loading.isVisible = false
 
             lifecycleScope.launch {
                 viewModel.state.collect { state ->
                     when (state) {
-                        WelcomeViewState.Loading -> showLoading()
+                        WelcomeViewState.Loading -> Unit//showLoading()
                         is WelcomeViewState.Done -> showWelcome(view, state)
-                        WelcomeViewState.TimedOut -> navigateToContainer()
+                        WelcomeViewState.TimedOut -> navigateNext()
                     }
                 }
             }
         }
 
         view.setOnClickListener {
-            navigateToContainer()
+            navigateNext()
         }
     }
 
@@ -110,7 +115,7 @@ class WelcomeFragment : Fragment() {
         TODO("Not yet implemented")
     }
 
-    private fun navigateToContainer() {
-        findNavController().navigate(WelcomeFragmentDirections.toContainerFragment())
+    private fun navigateNext() {
+        findNavController().navigate(WelcomeFragmentDirections.toCategoriesFragment())
     }
 }

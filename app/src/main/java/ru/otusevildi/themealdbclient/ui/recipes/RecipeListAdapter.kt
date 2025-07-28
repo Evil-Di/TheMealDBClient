@@ -1,4 +1,4 @@
-package ru.otusevildi.themealdbclient.ui.container.recipes
+package ru.otusevildi.themealdbclient.ui.recipes
 
 import android.annotation.SuppressLint
 import android.content.Context

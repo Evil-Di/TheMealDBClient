@@ -16,10 +16,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         onBackPressedDispatcher.addCallback(this) {
-            if (!findNavController(R.id.secondary_container_view).popBackStack()) {
-                if (!findNavController(R.id.main_container_view).popBackStack()) {
-                    finish()
-                }
+            if (!findNavController(R.id.nav_container_view).popBackStack()) {
+                finish()
             }
         }
     }
