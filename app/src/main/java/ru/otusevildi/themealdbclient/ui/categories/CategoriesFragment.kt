@@ -22,10 +22,8 @@ import ru.otusevildi.themealdbclient.R
 import ru.otusevildi.themealdbclient.databinding.FragmentCategoriesBinding
 import kotlin.math.abs
 import androidx.core.view.isInvisible
-import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -33,7 +31,6 @@ import ru.otusevildi.themealdbclient.data.Recipe
 import ru.otusevildi.themealdbclient.data.RecipeCategory
 import ru.otusevildi.themealdbclient.data.TAB_CATEGORIES
 import ru.otusevildi.themealdbclient.data.TAB_FAVORITES
-import ru.otusevildi.themealdbclient.ui.SearchListAdapter
 
 @AndroidEntryPoint
 class CategoriesFragment: Fragment() {
@@ -63,7 +60,6 @@ class CategoriesFragment: Fragment() {
         viewLifecycleOwner.lifecycle.addObserver(BindingDestroyer())
         setCategoriesViewPager()
         setFavoritesViewPager()
-        setSearchView()
 
         stateJob?.cancel()
         stateJob = lifecycleScope.launch {
@@ -126,43 +122,6 @@ class CategoriesFragment: Fragment() {
         }
     }
 
-    private fun setSearchView() {
-        binding.withBinding {
-            searchRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-            searchRecyclerView.visibility = View.INVISIBLE
-            searchRecyclerView.adapter = SearchListAdapter { recipeId ->
-                searchView.hide()
-                recipeId?.let {
-                    findNavController().navigate(
-                        CategoriesFragmentDirections.toRecipeFragment(
-                            recipeId
-                        )
-                    )
-                }
-            }
-
-            lifecycleScope.launch {
-                viewModel.searchSuggestions.collect {
-                    if (it.isNotEmpty() && searchView.editText.text.isNotEmpty()) {
-                        (searchRecyclerView.adapter as SearchListAdapter).setData(it)
-                    }
-                    else {
-                        (searchRecyclerView.adapter as SearchListAdapter).setData(emptyList())
-                    }
-                    searchRecyclerView.visibility = View.VISIBLE
-                }
-            }
-
-            searchView.editText.doAfterTextChanged {
-                if (searchView.editText.text.isNotEmpty()) {
-                    viewModel.onSearch(it.toString())
-                }
-                else {
-                    searchRecyclerView.visibility = View.INVISIBLE
-                }
-            }
-        }
-    }
 /*
     private fun setData(categories: List<RecipeCategory>, recipes: List<Recipe>) {
         categoriesAdapter.setData(categories)

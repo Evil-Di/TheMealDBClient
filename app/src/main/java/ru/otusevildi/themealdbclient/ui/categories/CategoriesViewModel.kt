@@ -14,13 +14,10 @@ import ru.otusevildi.themealdbclient.data.DataCache
 import ru.otusevildi.themealdbclient.data.Recipe
 import ru.otusevildi.themealdbclient.data.RecipeCategory
 import ru.otusevildi.themealdbclient.data.TAB_NOT_SELECTED
-import ru.otusevildi.themealdbclient.net.NetService
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoriesViewModel @Inject constructor(private val dataCache: DataCache,
-                                              private val service: NetService
-    ) : ViewModel() {
+class CategoriesViewModel @Inject constructor(private val dataCache: DataCache) : ViewModel() {
     private var _state = MutableStateFlow<CategoriesViewState>(CategoriesViewState.Loading)
     val state: StateFlow<CategoriesViewState> get() = _state
 
@@ -28,12 +25,7 @@ class CategoriesViewModel @Inject constructor(private val dataCache: DataCache,
     private var favorites: List<Recipe> = emptyList()
     private var tab: Int = TAB_NOT_SELECTED
 
-    private var _searchSuggestions = MutableStateFlow<List<Recipe>>(emptyList())
-    val searchSuggestions: StateFlow<List<Recipe>> get() = _searchSuggestions
-
     init {
-        dataCache.init(viewModelScope, service)
-
         viewModelScope.launch {
             val categoriesResultDeferred = async(Dispatchers.IO) {
                 dataCache.categories.first {
@@ -95,24 +87,9 @@ class CategoriesViewModel @Inject constructor(private val dataCache: DataCache,
                 }
             }
         }
-
-        viewModelScope.launch {
-            dataCache.suggestions.collect {
-                _searchSuggestions.value = it
-            }
-        }
     }
 
     fun onTabSelected(index: Int) {
         dataCache.setSelectedTab(viewModelScope, index)
-    }
-
-    fun onSearch(text: String) {
-        if (text.isEmpty()) {
-            //dataCache.getRecentSearch()
-        }
-        else {
-            dataCache.getSuggestions(viewModelScope, text)
-        }
     }
 }

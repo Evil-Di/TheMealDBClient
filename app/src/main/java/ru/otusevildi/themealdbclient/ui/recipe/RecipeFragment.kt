@@ -6,12 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -20,9 +17,6 @@ import kotlinx.coroutines.launch
 import ru.otus.basicarchitecture.ui.FragmentBindingDelegate
 import ru.otusevildi.themealdbclient.data.Recipe
 import ru.otusevildi.themealdbclient.databinding.FragmentRecipeBinding
-import ru.otusevildi.themealdbclient.ui.SearchListAdapter
-import ru.otusevildi.themealdbclient.ui.categories.CategoriesFragmentDirections
-
 
 @AndroidEntryPoint
 class RecipeFragment: Fragment() {
@@ -44,8 +38,6 @@ class RecipeFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setSearchView()
 
         binding.withBinding {
             lifecycleScope.launch {
@@ -72,7 +64,7 @@ class RecipeFragment: Fragment() {
             Glide.with(requireContext()).load(recipe.tLink).centerCrop().into(image)
             title.text = recipe.name
             instructionsText.text = recipe.description
-            ingredientsSheet.apply {
+            /*ingredientsSheet.apply {
                 i1.text = recipe.i1;    m1.text = recipe.m1
                 i2.text = recipe.i2;    m2.text = recipe.m2
                 i3.text = recipe.i3;    m3.text = recipe.m3
@@ -93,7 +85,7 @@ class RecipeFragment: Fragment() {
                 i18.text = recipe.i18;  m18.text = recipe.m18
                 i19.text = recipe.i19;  m19.text = recipe.m19
                 i20.text = recipe.i20;  m20.text = recipe.m20
-            }
+            }*/
             favorite.setOnCheckedChangeListener { _, isChecked ->
                 viewModel.setFavorite(recipeId, isChecked)
             }
@@ -110,44 +102,6 @@ class RecipeFragment: Fragment() {
                             }
                         })
                     }
-                }
-            }
-        }
-    }
-
-    private fun setSearchView() {
-        binding.withBinding {
-            searchRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-            searchRecyclerView.visibility = View.INVISIBLE
-            searchRecyclerView.adapter = SearchListAdapter { recipeId ->
-                searchView.hide()
-                recipeId?.let {
-                    findNavController().navigate(
-                        CategoriesFragmentDirections.toRecipeFragment(
-                            recipeId
-                        )
-                    )
-                }
-            }
-
-            lifecycleScope.launch {
-                viewModel.searchSuggestions.collect {
-                    if (it.isNotEmpty() && searchView.editText.text.isNotEmpty()) {
-                        (searchRecyclerView.adapter as SearchListAdapter).setData(it)
-                    }
-                    else {
-                        (searchRecyclerView.adapter as SearchListAdapter).setData(emptyList())
-                    }
-                    searchRecyclerView.visibility = View.VISIBLE
-                }
-            }
-
-            searchView.editText.doAfterTextChanged {
-                if (searchView.editText.text.isNotEmpty()) {
-                    viewModel.onSearch(it.toString())
-                }
-                else {
-                    searchRecyclerView.visibility = View.INVISIBLE
                 }
             }
         }
