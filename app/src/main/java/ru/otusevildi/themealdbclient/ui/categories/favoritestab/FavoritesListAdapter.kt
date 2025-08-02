@@ -1,4 +1,4 @@
-package ru.otusevildi.themealdbclient.ui.categories
+package ru.otusevildi.themealdbclient.ui.categories.favoritestab
 
 import android.annotation.SuppressLint
 import android.content.Context

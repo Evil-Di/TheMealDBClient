@@ -51,7 +51,7 @@ class RecipeListFragment: Fragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.state.collect { state ->
+            viewModel.state.observe(viewLifecycleOwner) { state ->
                 when(state) {
                     RecipeListViewState.Loading -> Unit
                     is RecipeListViewState.SetData -> adapter.setData(state.list)

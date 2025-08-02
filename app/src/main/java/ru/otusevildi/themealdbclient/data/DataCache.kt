@@ -26,7 +26,7 @@ interface DataCache {
     val categories: Flow<List<RecipeCategory>>
     val recipesByCategory: Flow<List<RecipeShort>>
     val recipeById: Flow<Recipe?>
-    val favorites: Flow<List<Recipe>>
+    val favorites: StateFlow<List<Recipe>?>
     val suggestions: Flow<List<Recipe>>
     fun init(scope: CoroutineScope, service: NetService)
     fun setSelectedTab(scope: CoroutineScope, index: Int)
@@ -60,8 +60,8 @@ interface DataCache {
         private var _recipeById = MutableStateFlow<Recipe?>(null)
         override val recipeById: StateFlow<Recipe?> get() = _recipeById
 
-        private var _favorites = MutableStateFlow<List<Recipe>>(emptyList())
-        override val favorites: StateFlow<List<Recipe>> get() = _favorites
+        private var _favorites = MutableStateFlow<List<Recipe>?>(null)
+        override val favorites: StateFlow<List<Recipe>?> get() = _favorites
 
         private var _suggestions = MutableStateFlow<List<Recipe>>(emptyList())
         override val suggestions: StateFlow<List<Recipe>> get() = _suggestions
@@ -75,11 +75,13 @@ interface DataCache {
             }
             scope.launch {
                 dataStoreProvider.getFavorites().collect { set ->
-                    Log.i(TAG, "new favorites: $set")
                     if (set != favoriteIds) {
+                        Log.i(TAG, "new favorites: $set")
                         favoriteIds = set.toMutableSet()
                         val resultList = mutableListOf<Deferred<Recipe>>()
-                        val newList = _favorites.value.toMutableList()
+                        val newList =
+                            if (_favorites.value != null) _favorites.value!!.toMutableList()
+                            else emptyList<Recipe>().toMutableList()
 
                         /* здесь возможен RuntimeException.concurrencyModification
                         newList.forEach {
@@ -89,8 +91,8 @@ interface DataCache {
                                 }
                             }
                         } напишем иначе */
-                        var i = newList.size-1
-                        while(i >= 0) {
+                        var i = newList.size - 1
+                        while (i >= 0) {
                             if (newList[i].id != null) {
                                 if (!checkInList(newList[i].id!!, favoriteIds!!.toList())) {
                                     newList.removeAt(i)
@@ -161,8 +163,8 @@ interface DataCache {
         }
 
         override fun addFavorite(scope: CoroutineScope, f: String) {
-            Log.i(TAG, "add favorite: $f")
             if (!favoriteIds!!.contains(f)) {
+                Log.i(TAG, "add favorite: $f")
                 val newList: MutableSet<String> = favoriteIds!!.toMutableSet()
                 if (newList.add(f)) {
                     scope.launch {
@@ -173,8 +175,8 @@ interface DataCache {
         }
 
         override fun removeFavorite(scope: CoroutineScope, f: String) {
-            Log.i(TAG, "remove favorite: $f")
             if (favoriteIds!!.contains(f)) {
+                Log.i(TAG, "remove favorite: $f")
                 val newList: MutableSet<String> = favoriteIds!!.toMutableSet()
                 if (newList.remove(f)) {
                     scope.launch {
@@ -201,7 +203,7 @@ interface DataCache {
         }
 
         private fun checkLoaded(id: String): Boolean {
-            _favorites.value.forEach {
+            _favorites.value?.forEach {
                 if (it.id == id) {
                     return true
                 }

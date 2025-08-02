@@ -1,21 +1,21 @@
 package ru.otusevildi.themealdbclient.ui.recipe
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import ru.otusevildi.themealdbclient.data.DataCache
 import javax.inject.Inject
 
 @HiltViewModel
 class RecipeViewModel @Inject constructor(private val dataCache: DataCache) : ViewModel() {
-    private var _recipe = MutableStateFlow<RecipeViewState>(RecipeViewState.Loading)
-    val recipe: StateFlow<RecipeViewState> get() = _recipe
+    private var _recipe = MutableLiveData<RecipeViewState>(RecipeViewState.Loading)
+    val recipe: LiveData<RecipeViewState> get() = _recipe
 
-    private var _favorite = MutableStateFlow(false)
-    val favorite: StateFlow<Boolean> get() = _favorite
+    private var _favorite = MutableLiveData(false)
+    val favorite: LiveData<Boolean> get() = _favorite
 
     private var recipeId = ""
 
@@ -37,7 +37,7 @@ class RecipeViewModel @Inject constructor(private val dataCache: DataCache) : Vi
 
         viewModelScope.launch {
             dataCache.favorites.collect { list ->
-                list.forEach {
+                list?.forEach {
                     if (it.id == recipeId) {
                         _favorite.value = true
                     }

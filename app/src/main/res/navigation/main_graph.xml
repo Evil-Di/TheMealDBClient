@@ -12,15 +12,15 @@
         tools:layout="@layout/fragment_welcome">
         <action
             android:id="@+id/to_categoriesFragment"
-            app:destination="@id/categoriesFragment"
+            app:destination="@id/categoriesHostFragment"
             app:popUpTo="@id/main_graph"
             />
     </fragment>
     <fragment
-        android:id="@+id/categoriesFragment"
-        android:label="categoriesFragment"
-        android:name="ru.otusevildi.themealdbclient.ui.categories.CategoriesFragment"
-        tools:layout="@layout/tab_categories">
+        android:id="@+id/categoriesHostFragment"
+        android:label="categoriesHostFragment"
+        android:name="ru.otusevildi.themealdbclient.ui.categories.CategoriesHostFragment"
+        tools:layout="@layout/fragment_categories_host">
         <action
             android:id="@+id/to_recipesFragment"
             app:destination="@id/recipesFragment"
@@ -56,4 +56,34 @@
             app:destination="@id/recipeFragment"
             />
     </fragment>
+<!--    <navigation android:id="@+id/tabs_graph"-->
+<!--        app:startDestination="@id/categoriesHostFragment"-->
+<!--        >-->
+<!--        <fragment-->
+<!--            android:id="@+id/categoriesHostFragment"-->
+<!--            android:label="categoriesHostFragment"-->
+<!--            android:name="ru.otusevildi.themealdbclient.ui.categories.CategoriesHostFragment"-->
+<!--            tools:layout="@layout/fragment_categories_host">-->
+<!--            <action-->
+<!--                android:id="@+id/to_categoriesTabFragment"-->
+<!--                app:destination="@id/categoriesTabFragment"-->
+<!--                />-->
+<!--            <action-->
+<!--                android:id="@+id/to_favoritesTabFragment"-->
+<!--                app:destination="@id/favoritesTabFragment"-->
+<!--                />-->
+<!--        </fragment>-->
+<!--        <fragment-->
+<!--            android:id="@+id/categoriesTabFragment"-->
+<!--            android:label="categoriesTabFragment"-->
+<!--            android:name="ru.otusevildi.themealdbclient.ui.categories.CategoriesHostFragment"-->
+<!--            tools:layout="@layout/tab_categories">-->
+<!--        </fragment>-->
+<!--        <fragment-->
+<!--            android:id="@+id/favoritesTabFragment"-->
+<!--            android:label="favoritesTabFragment"-->
+<!--            android:name="ru.otusevildi.themealdbclient.ui.categories.CategoriesHostFragment"-->
+<!--            tools:layout="@layout/tab_favorites">-->
+<!--        </fragment>-->
+<!--    </navigation>-->
 </navigation>

@@ -9,11 +9,11 @@
 
     <include android:id="@+id/tab_layout" layout="@layout/tabs"/>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <include android:id="@+id/tab_categories" layout="@layout/tab_categories"/>
-        <include android:id="@+id/tab_favorites" layout="@layout/tab_favorites" android:visibility="invisible"/>
-    </FrameLayout>
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/tabs_host"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            />
 
 </LinearLayout>

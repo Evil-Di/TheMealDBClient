@@ -41,7 +41,7 @@ class RecipeFragment: Fragment() {
 
         binding.withBinding {
             lifecycleScope.launch {
-                viewModel.recipe.collect { state ->
+                viewModel.recipe.observe(viewLifecycleOwner) { state ->
                     when(state) {
                         RecipeViewState.Loading -> showLoading()
                         is RecipeViewState.Received -> state.recipe?.let { showRecipe(it) }
@@ -50,7 +50,7 @@ class RecipeFragment: Fragment() {
             }
             viewModel.selectRecipe(recipeId)
             lifecycleScope.launch {
-                viewModel.favorite.collect {
+                viewModel.favorite.observe(viewLifecycleOwner) {
                     favorite.isChecked = it
                 }
             }

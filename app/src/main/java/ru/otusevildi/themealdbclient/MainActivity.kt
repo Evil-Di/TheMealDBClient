@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import ru.otusevildi.themealdbclient.data.Recipe
 import ru.otusevildi.themealdbclient.databinding.ActivityMainBinding
 import ru.otusevildi.themealdbclient.ui.SearchListAdapter
-import ru.otusevildi.themealdbclient.ui.categories.CategoriesFragmentDirections
+import ru.otusevildi.themealdbclient.ui.categories.CategoriesHostFragmentDirections
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -25,9 +25,9 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        enableEdgeToEdge()
         setContentView(binding.root)
 
         setSearchView(this)
@@ -53,12 +53,13 @@ class MainActivity : AppCompatActivity() {
         findNavController(R.id.nav_container_view).addOnDestinationChangedListener { _, destination, _ ->
             findViewById<View>(R.id.ingredients_sheet).visibility =
                 if (destination.id == R.id.recipeFragment) View.VISIBLE else View.GONE
+
+            findViewById<View>(R.id.search_bar).visibility =
+                if (destination.id != R.id.welcomeFragment) View.VISIBLE else View.GONE
         }
     }
 
     private fun setSearchView(context: Context) {
-        //val searchRecyclerView = findViewById<RecyclerView>(R.id.search_recycler_view)
-        //val searchView = findViewById<com.google.android.material.search.SearchView>(R.id.search_view)
         binding.apply {
             searchRecyclerView.layoutManager = LinearLayoutManager(context)
             searchRecyclerView.visibility = View.INVISIBLE
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 searchView.hide()
                 recipeId?.let {
                     findNavController(R.id.nav_container_view).navigate(
-                        CategoriesFragmentDirections.toRecipeFragment(
+                        CategoriesHostFragmentDirections.toRecipeFragment(
                             recipeId
                         )
                     )

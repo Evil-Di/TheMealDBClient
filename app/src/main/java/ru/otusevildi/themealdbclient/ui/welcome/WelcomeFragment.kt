@@ -1,7 +1,6 @@
 package ru.otusevildi.themealdbclient.ui.welcome
 
 import android.content.ContentValues.TAG
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,10 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.otus.basicarchitecture.ui.FragmentBindingDelegate
@@ -61,7 +56,7 @@ class WelcomeFragment : Fragment() {
     private fun showLoading() {
         binding.withBinding {
             loading.isVisible = true
-            image.isVisible = true
+            image.isVisible = false
             text.isVisible = false
         }
     }
@@ -69,9 +64,9 @@ class WelcomeFragment : Fragment() {
     private fun showWelcome(view: View, data: WelcomeViewState.Done) {
         data.imgLink?.let {
             binding.withBinding {
-                Glide.with(view.context)
+                Glide.with(requireContext())
                     .load(data.imgLink)
-                    .listener(object : RequestListener<Drawable> {
+                    /*.listener(object : RequestListener<Drawable> {
                         override fun onResourceReady(
                             resource: Drawable,
                             model: Any,
@@ -91,13 +86,18 @@ class WelcomeFragment : Fragment() {
                             target: Target<Drawable>,
                             isFirstResource: Boolean
                         ): Boolean {
+                            loading.isVisible = false
+                            image.isVisible = false
+                            text.isVisible = true
                             showError(data.error)
                             return true
                         }
-                    })
+                    })*/
                     .centerCrop()
                     .into(image)
-
+                loading.isVisible = false
+                image.isVisible = true
+                text.isVisible = true
             }
         }
 
@@ -107,11 +107,6 @@ class WelcomeFragment : Fragment() {
     }
 
     private fun showError(e: Exception?) {
-        binding.withBinding {
-            loading.isVisible = false
-            image.isVisible = false
-            text.isVisible = false
-        }
         TODO("Not yet implemented")
     }
 
