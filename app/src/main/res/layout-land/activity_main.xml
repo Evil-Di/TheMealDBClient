@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        >
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_container_view"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/main_graph" />
+
+        <com.google.android.material.search.SearchBar
+            android:id="@+id/search_bar"
+            android:layout_marginStart="700dp"
+            android:layout_marginTop="-1dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:liftOnScrollColor="?attr/colorSurfaceContainerHighest"
+            />
+
+        <com.google.android.material.search.SearchView
+            android:id="@+id/search_view"
+            android:hint="@string/search_hint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_anchor="@id/search_bar"
+            app:liftOnScroll="true"
+            app:liftOnScrollColor="?attr/colorSurfaceContainerHighest"
+            >
+
+            <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/search_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_anchor="@id/search_bar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+        </com.google.android.material.search.SearchView>
+
+        <include android:id="@+id/ingredients_sheet" layout="@layout/ingredients"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>
