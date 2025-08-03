@@ -48,6 +48,10 @@ class RecipeListFragment: Fragment() {
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter
             text.text = category
+
+            back.setOnClickListener {
+                findNavController().navigateUp()
+            }
         }
 
         lifecycleScope.launch {

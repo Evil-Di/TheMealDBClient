@@ -10,4 +10,6 @@
     <string name="instructions">Instructions</string>
     <string name="ingredients">Ingredients</string>
     <string name="favorite">Favorite</string>
+    <string name="back_button_desc">This is back button</string>
+    <string name="welcome_screen_desc">This is welcome screen</string>
 </resources>

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -88,6 +89,10 @@ class RecipeFragment: Fragment() {
             }*/
             favorite.setOnCheckedChangeListener { _, isChecked ->
                 viewModel.setFavorite(recipeId, isChecked)
+            }
+
+            back.setOnClickListener {
+                findNavController().navigateUp()
             }
 
             recipe.vLink?.let {
